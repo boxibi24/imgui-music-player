@@ -137,19 +137,19 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs\glfw\include;D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs;D:\musicPlayerImGUI\imgui-music-player\imgui\backends;D:\musicPlayerImGUI\imgui-music-player\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>imgui\examples\libs\glfw\include;imgui\examples\libs;imgui\backends;imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs\glfw\include;D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs;D:\musicPlayerImGUI\imgui-music-player\imgui\backends;D:\musicPlayerImGUI\imgui-music-player\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>imgui\examples\libs\glfw\include;imgui\examples\libs;imgui\backends;imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\musicPlayerImGUI\imgui-music-player\imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
