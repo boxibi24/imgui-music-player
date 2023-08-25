@@ -8,6 +8,7 @@ imgui.ini
 *.o
 *.obj
 *.exe
+Debug/*
 examples/*/Debug/*
 examples/*/Release/*
 examples/*/x64/*
