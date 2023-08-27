@@ -10,6 +10,8 @@
 #include "imgui_impl_opengl3.h"
 #include <string>
 #include <stdio.h>
+#include <filesystem>
+namespace fs = std::filesystem;
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -114,6 +116,7 @@ int main(int, char**)
 
     //Variables for when we want to look through the directory
     char directory[MAX_STRING_LENGTH] = { 0 };
+    char test[MAX_STRING_LENGTH] = { 'c','o','w'};
 
 
 
@@ -150,13 +153,29 @@ int main(int, char**)
             ImGui::SameLine();
             ImGui::InputText(" ", directory, MAX_STRING_LENGTH);
             
+
             ImGui::BeginChild("directoryContent");
-            for (int i = 0; i < 200; i++) {
-                
-                ImGui::Text("%s, %d\n", directory,i);
+            try {
+                for (const auto& entry : fs::directory_iterator(directory))
+                    if (ImGui::Selectable(entry.path().string().c_str(), true)) {
+                        strcpy(&directory[0], entry.path().string().c_str());
+                    }
+            }
+            catch (const std::overflow_error& e)
+            {
+            } // this executes if f() throws std::overflow_error (same type rule)
+            catch (const std::runtime_error& e)
+            {
+            } // this executes if f() throws std::underflow_error (base class rule)
+            catch (const std::exception& e)
+            {
+            } // this executes if f() throws std::logic_error (base class rule)
+            catch (...)
+            {
             }
             ImGui::EndChild();
             
+            ImGui::Text("%s", test);
 
             ImGui::End();
         }

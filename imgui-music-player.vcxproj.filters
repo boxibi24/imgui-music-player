@@ -71,5 +71,8 @@
     <ClInclude Include="imgui\imstb_textedit.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="dirUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
