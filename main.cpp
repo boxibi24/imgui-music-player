@@ -2,10 +2,13 @@
 // (GLFW is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
+#define MAX_STRING_LENGTH 90 //arbitrary length
+
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include <string>
 #include <stdio.h>
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
@@ -104,11 +107,15 @@ int main(int, char**)
 
     // Our state
     //bool show_demo_window = true;
-    bool show_demo_window = false;
+    bool show_demo_window = true;
     bool show_another_window = false;
-    bool testWindowBooleanCallback1 = false;
-    bool testWindowBooleanCallback2 = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
+    //Variables for when we want to look through the directory
+    char directory[MAX_STRING_LENGTH] = { 0 };
+
+
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -137,10 +144,20 @@ int main(int, char**)
             ImGui::ShowDemoWindow(&show_demo_window);
 
         {
-            ImGui::Begin("EintausendjahrigesReich");
-            ImGui::Text("SiegHeil");
-            ImGui::Checkbox("Your Mom",&testWindowBooleanCallback1);
-            ImGui::Checkbox("Test", &testWindowBooleanCallback2);
+            ImGui::Begin("Directory access");
+
+            ImGui::Text("Directory:");
+            ImGui::SameLine();
+            ImGui::InputText(" ", directory, MAX_STRING_LENGTH);
+            
+            ImGui::BeginChild("directoryContent");
+            for (int i = 0; i < 200; i++) {
+                
+                ImGui::Text("%s, %d\n", directory,i);
+            }
+            ImGui::EndChild();
+            
+
             ImGui::End();
         }
 
