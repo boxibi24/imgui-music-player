@@ -15,5 +15,8 @@ FMOD_RESULT fmodAudio::createFmodSystem()
 	if (result != FMOD_OK)
 	{
 
+		
 	}
+	
+	return FMOD_OK;
 }

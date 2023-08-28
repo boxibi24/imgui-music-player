@@ -1,3 +1,4 @@
+
 #pragma once
 #include "fmod/fmod.hpp"
 
@@ -12,4 +13,3 @@ private:
 	FMOD_RESULT createFmodSystem();
 
 };
-

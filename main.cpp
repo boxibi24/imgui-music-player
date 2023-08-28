@@ -2,7 +2,7 @@
 // (GLFW is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
-#define MAX_STRING_LENGTH 90 //arbitrary length
+#define MAX_STRING_LENGTH 260 //max string length for directory defined in CLR (win32)
 
 
 #include "imgui.h"
@@ -113,12 +113,12 @@ int main(int, char**)
     //bool show_demo_window = true;
     bool show_demo_window = true;
     bool show_another_window = false;
+    bool show_file_browser_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 
     //Variables for when we want to look through the directory
-    char directory[MAX_STRING_LENGTH] = { 0 };
-    char test[MAX_STRING_LENGTH] = { 'c','o','w'};
+    std::filesystem::path directory = "C:";
 
 
 
@@ -144,24 +144,39 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+        // DIRECTORY ACCESS
+        ImGui::ShowDemoWindow(&show_demo_window);
 
         {
+            //variables for this scope
+            char tmpCharArray[MAX_STRING_LENGTH];
+
+
             ImGui::Begin("Directory access");
 
             ImGui::Text("Directory:");
             ImGui::SameLine();
-            ImGui::InputText(" ", directory, MAX_STRING_LENGTH);
-            
 
+            //Set default content of input text to default value of directory, 
+            //the string copy is work around for the requirement of having to use a char* instead of const char*
+            strcpy(tmpCharArray, directory.string().c_str());
+            ImGui::InputText(" ", tmpCharArray, MAX_STRING_LENGTH);
+
+            if (ImGui::Button("Back")) {
+                if (directory.has_parent_path()) directory = directory.parent_path();
+            }
             ImGui::BeginChild("directoryContent");
             try {
-                for (const auto& entry : fs::directory_iterator(directory))
+                for (const auto& entry : fs::directory_iterator(directory)) {
+
                     if (ImGui::Selectable(entry.path().string().c_str(), true)) {
-                        strcpy(&directory[0], entry.path().string().c_str());
+                        //If its a directory, go into it, files are to be dealt with later
+                        if (entry.is_directory()) {
+                            directory = entry.path();
+                        }
                     }
+
+                }
             }
             catch (const std::overflow_error& e)
             {
@@ -176,8 +191,6 @@ int main(int, char**)
             {
             }
             ImGui::EndChild();
-            
-            ImGui::Text("%s", test);
 
             ImGui::End();
         }
