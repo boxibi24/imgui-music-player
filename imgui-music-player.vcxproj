@@ -20,6 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dirUtil.h" />
+    <ClInclude Include="fmod\include\fmod.h" />
+    <ClInclude Include="fmod\include\fmod.hpp" />
+    <ClInclude Include="fmod\include\fmod_codec.h" />
+    <ClInclude Include="fmod\include\fmod_common.h" />
+    <ClInclude Include="fmod\include\fmod_dsp.h" />
+    <ClInclude Include="fmod\include\fmod_dsp_effects.h" />
+    <ClInclude Include="fmod\include\fmod_errors.h" />
+    <ClInclude Include="fmod\include\fmod_output.h" />
+    <ClInclude Include="fmod_audio.h" />
     <ClInclude Include="imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3_loader.h" />
@@ -31,6 +40,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fmod_audio.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -148,12 +158,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>imgui\examples\libs\glfw\include;imgui\examples\libs;imgui\backends;imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>fmod;imgui\examples\libs\glfw\include;imgui\examples\libs;imgui\backends;imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>libs;imgui\examples\libs\glfw\include\GLFW;imgui\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodL_vc.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

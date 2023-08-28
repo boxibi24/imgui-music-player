@@ -32,6 +32,8 @@ namespace fs = std::filesystem;
 #include "imgui/imgui.h"
 #include "imgui/examples/libs/glfw/include/GLFW/glfw3.h"
 #include "imgui/backends/imgui_impl_glfw.h"
+#include "fmod_audio.h"
+
 
 static void glfw_error_callback(int error, const char* description)
 {

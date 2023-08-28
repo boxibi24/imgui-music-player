@@ -16,6 +16,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{f7dc7a4a-a0da-4a35-a7de-aae2982495e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Dependencies">
+      <UniqueIdentifier>{ddd5f414-ead3-4ade-be39-71d1136c678e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="imgui\imgui_tables.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="fmod_audio.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,33 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="dirUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod.hpp">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_codec.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_common.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_dsp.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_dsp_effects.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_errors.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\include\fmod_output.h">
+      <Filter>External Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
