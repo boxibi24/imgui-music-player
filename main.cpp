@@ -32,7 +32,7 @@ namespace fs = std::filesystem;
 #include "imgui/imgui.h"
 #include "imgui/examples/libs/glfw/include/GLFW/glfw3.h"
 #include "imgui/backends/imgui_impl_glfw.h"
-#include "fmod_audio.h"
+//#include "fmod_audio.h"
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -160,7 +160,9 @@ int main(int, char**)
             //Set default content of input text to default value of directory, 
             //the string copy is work around for the requirement of having to use a char* instead of const char*
             strcpy(tmpCharArray, directory.string().c_str());
-            ImGui::InputText(" ", tmpCharArray, MAX_STRING_LENGTH);
+            if (ImGui::InputText(" ", tmpCharArray, MAX_STRING_LENGTH)) {
+                directory = tmpCharArray;
+            }
 
             if (ImGui::Button("Back")) {
                 if (directory.has_parent_path()) directory = directory.parent_path();
