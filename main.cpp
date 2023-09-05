@@ -11,6 +11,7 @@
 #include <string>
 #include <stdio.h>
 #include <filesystem>
+#include <windows.h>
 namespace fs = std::filesystem;
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
@@ -32,6 +33,7 @@ namespace fs = std::filesystem;
 #include "imgui/imgui.h"
 #include "imgui/examples/libs/glfw/include/GLFW/glfw3.h"
 #include "imgui/backends/imgui_impl_glfw.h"
+#include <iostream>
 //#include "fmod_audio.h"
 
 
@@ -118,7 +120,7 @@ int main(int, char**)
 
 
     //Variables for when we want to look through the directory
-    std::filesystem::path directory = "C:";
+    std::filesystem::path directory = "C:\\";
 
 
 
@@ -144,19 +146,22 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // DIRECTORY ACCESS
-        ImGui::ShowDemoWindow(&show_demo_window);
+        
+        //ImGui::ShowDemoWindow(&show_demo_window);
 
+
+        // DIRECTORY ACCESS
         {
+
             //variables for this scope
             char tmpCharArray[MAX_STRING_LENGTH];
-
+            char drives[MAX_STRING_LENGTH];
 
             ImGui::Begin("Directory access");
 
             ImGui::Text("Directory:");
             ImGui::SameLine();
-
+            int test = GetLogicalDriveStrings(MAX_STRING_LENGTH,drives);
             //Set default content of input text to default value of directory, 
             //the string copy is work around for the requirement of having to use a char* instead of const char*
             strcpy(tmpCharArray, directory.string().c_str());
@@ -166,6 +171,15 @@ int main(int, char**)
 
             if (ImGui::Button("Back")) {
                 if (directory.has_parent_path()) directory = directory.parent_path();
+            }
+
+            //Why plus 4 ? strings obtained are of length for, because C:\ or D:\ and an end string character after that. Why does it work weird, as in every character goes in a slot and not a string a slot ? cuz char buffer and we use address (see & symbols)
+            ImGui::Text("Drives :");
+            for (int i = 0; i < test; i=i+4) {
+                ImGui::SameLine();
+                if (ImGui::Button(&drives[i])) {
+                    directory = std::string(&drives[i]);
+                }
             }
             ImGui::BeginChild("directoryContent");
             try {
