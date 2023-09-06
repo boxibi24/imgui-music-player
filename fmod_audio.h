@@ -1,6 +1,7 @@
 
 #pragma once
 #include "fmod/fmod.hpp"
+#include <string>
 
 class fmodAudio
 {
@@ -9,7 +10,7 @@ public:
 	~fmodAudio();
 
 private:
-	FMOD::System* fmod_system = nullptr;
-	FMOD_RESULT createFmodSystem();
-
+	FMOD::System* fmod_system;
+public:
+	void playAudioFromAudioFilePath(std::string FilePath);
 };

@@ -1,22 +1,44 @@
 #include "fmod_audio.h"
-#include <stdio.h>
+#include <iostream>
+#include <format>
+
+#define MAX_CHANELS 32
 
 fmodAudio::fmodAudio()
 {
+	FMOD_RESULT result = FMOD::System_Create(&fmod_system);
+	if (result != FMOD_OK)
+	{
+		std::cout << "FMOD error: " << result;
+	}
+	result = fmod_system->init(MAX_CHANELS, FMOD_INIT_NORMAL, 0);
+
+	
 }
 
 fmodAudio::~fmodAudio()
 {
 }
 
-FMOD_RESULT fmodAudio::createFmodSystem()
-{
-	FMOD_RESULT result = FMOD::System_Create(&fmod_system);
+void fmodAudio::playAudioFromAudioFilePath(std::string FilePath)
+{	
+	FMOD::Sound* SoundObject;
+	FMOD_RESULT result = fmod_system->createSound(
+		FilePath.c_str(),
+		FMOD_DEFAULT,
+		0,
+		&SoundObject
+	);
 	if (result != FMOD_OK)
 	{
-
-		
+		std::cout << "FMOD error: " << result << " When creating sound object";
 	}
 	
-	return FMOD_OK;
+	result = fmod_system->playSound(SoundObject, 0, false, 0);
+
+	if (result != FMOD_OK)
+	{
+		std::cout << "FMOD error: " << result << " When playing sound";
+	}
 }
+

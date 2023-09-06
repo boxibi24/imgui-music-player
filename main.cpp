@@ -34,7 +34,7 @@ namespace fs = std::filesystem;
 #include "imgui/examples/libs/glfw/include/GLFW/glfw3.h"
 #include "imgui/backends/imgui_impl_glfw.h"
 #include <iostream>
-//#include "fmod_audio.h"
+#include "fmod_audio.h"
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -117,7 +117,7 @@ int main(int, char**)
     bool show_another_window = false;
     bool show_file_browser_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
+    fmodAudio AudioPlayer;
 
     //Variables for when we want to look through the directory
     std::filesystem::path directory = "C:\\";
@@ -190,6 +190,18 @@ int main(int, char**)
                         if (entry.is_directory()) {
                             directory = entry.path();
                         }
+                        else
+                        {
+                            try
+                            {
+                                std::string path_string{ entry.path().string() };
+                                AudioPlayer.playAudioFromAudioFilePath(path_string);
+                            }
+                            catch (const std::exception& e)
+                            {
+                                std::cout << e.what();
+                            }
+                        }
                     }
 
                 }
@@ -227,7 +239,7 @@ int main(int, char**)
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+            if (ImGui::Button("Play sample audio"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter++;
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
