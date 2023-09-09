@@ -181,6 +181,15 @@ int main(int, char**)
                     directory = std::string(&drives[i]);
                 }
             }
+            if (ImGui::Button("Stop audio"))
+            {   
+                bool isPlaying;
+                AudioPlayer.channelGroup->isPlaying(&isPlaying);
+                if (isPlaying)
+                {
+                    AudioPlayer.channelGroup->stop();
+                }
+            }
             ImGui::BeginChild("directoryContent");
             try {
                 for (const auto& entry : fs::directory_iterator(directory)) {
@@ -195,6 +204,12 @@ int main(int, char**)
                             try
                             {
                                 std::string path_string{ entry.path().string() };
+								bool isPlaying;
+								AudioPlayer.channelGroup->isPlaying(&isPlaying);
+								if (isPlaying)
+								{
+									AudioPlayer.channelGroup->stop();
+								}
                                 AudioPlayer.playAudioFromAudioFilePath(path_string);
                             }
                             catch (const std::exception& e)

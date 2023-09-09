@@ -12,8 +12,8 @@ fmodAudio::fmodAudio()
 		std::cout << "FMOD error: " << result;
 	}
 	result = fmod_system->init(MAX_CHANELS, FMOD_INIT_NORMAL, 0);
-
 	
+	fmod_system->createChannelGroup("TestChannel", &channelGroup);
 }
 
 fmodAudio::~fmodAudio()
@@ -34,8 +34,7 @@ void fmodAudio::playAudioFromAudioFilePath(std::string FilePath)
 		std::cout << "FMOD error: " << result << " When creating sound object";
 	}
 	
-	result = fmod_system->playSound(SoundObject, 0, false, 0);
-
+	result = fmod_system->playSound(SoundObject, channelGroup, false, &channel);
 	if (result != FMOD_OK)
 	{
 		std::cout << "FMOD error: " << result << " When playing sound";

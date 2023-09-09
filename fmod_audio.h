@@ -13,4 +13,6 @@ private:
 	FMOD::System* fmod_system;
 public:
 	void playAudioFromAudioFilePath(std::string FilePath);
+	FMOD::Channel* channel;
+	FMOD::ChannelGroup* channelGroup;
 };
