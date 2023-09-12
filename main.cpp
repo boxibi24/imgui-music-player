@@ -8,6 +8,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "fmod.h"
 #include <string>
 #include <stdio.h>
 #include <filesystem>
@@ -120,7 +121,7 @@ int main(int, char**)
     fmodAudio AudioPlayer;
 
     //Variables for when we want to look through the directory
-    std::filesystem::path directory = "C:\\";
+    std::filesystem::path directory = "D:\\Tu\\imgui-music-player\\media";
 
 
 
@@ -157,6 +158,10 @@ int main(int, char**)
             char tmpCharArray[MAX_STRING_LENGTH];
             char drives[MAX_STRING_LENGTH];
 
+            // Specifying initial position and size of window.
+            ImGui::SetNextWindowPos(ImVec2(20,20), 2, ImVec2(0, 0)); //x,y , 2 means only at start, changeable
+            ImGui::SetNextWindowSize(ImVec2(500,400),2); // width, height, 2 means only at start, changeable
+
             ImGui::Begin("Directory access");
 
             ImGui::Text("Directory:");
@@ -188,6 +193,7 @@ int main(int, char**)
                 if (isPlaying)
                 {
                     AudioPlayer.channelGroup->stop();
+                    
                 }
             }
             ImGui::BeginChild("directoryContent");
@@ -204,8 +210,8 @@ int main(int, char**)
                             try
                             {
                                 std::string path_string{ entry.path().string() };
-								bool isPlaying;
-								AudioPlayer.channelGroup->isPlaying(&isPlaying);
+                                bool isPlaying;
+                                AudioPlayer.channelGroup->isPlaying(&isPlaying);
 								if (isPlaying)
 								{
 									AudioPlayer.channelGroup->stop();
@@ -235,41 +241,31 @@ int main(int, char**)
             }
             ImGui::EndChild();
 
-            ImGui::End();
-        }
-
-
-
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Play sample audio"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
+            //PROGRESS BAR
+            try {
+                
+                unsigned int audioTotalLength = 0;
+                unsigned int position = 0;
+                bool isPlaying;
+                float percentageFilled = 0.0;
+                AudioPlayer.channelGroup->isPlaying(&isPlaying);
+                if (isPlaying) {
+                    AudioPlayer.sound->getLength(&audioTotalLength, FMOD_TIMEUNIT_MS);
+                    audioTotalLength = audioTotalLength / 1000;
+                    AudioPlayer.channel->getPosition(&position, FMOD_TIMEUNIT_MS);
+                    position = position / 1000;
+                    percentageFilled = position/(float)audioTotalLength;
+                }
+                std::string stringOverlay = std::to_string(position) + ":" + std::to_string(audioTotalLength);
+                
+                //first parameter is how much the bar is filled up, receives a float, below 1 (0.3 means 30%)
+                //second parameter is the allignment of the bar, 0 means auto alligned
+                //3rd is the text on the bar, if none is specified, percentage number according to first parameter will be had.
+                ImGui::ProgressBar(percentageFilled, ImVec2(0, 0), stringOverlay.c_str());
+            }
+            catch (std::exception& e) {
+                std::cout << e.what();
+            }
             ImGui::End();
         }
 

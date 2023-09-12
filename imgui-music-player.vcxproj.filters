@@ -104,5 +104,8 @@
     <ClInclude Include="fmod_audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileExplorer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

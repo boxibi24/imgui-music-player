@@ -22,19 +22,18 @@ fmodAudio::~fmodAudio()
 
 void fmodAudio::playAudioFromAudioFilePath(std::string FilePath)
 {	
-	FMOD::Sound* SoundObject;
 	FMOD_RESULT result = fmod_system->createSound(
 		FilePath.c_str(),
 		FMOD_DEFAULT,
 		0,
-		&SoundObject
+		&sound
 	);
 	if (result != FMOD_OK)
 	{
 		std::cout << "FMOD error: " << result << " When creating sound object";
 	}
 	
-	result = fmod_system->playSound(SoundObject, channelGroup, false, &channel);
+	result = fmod_system->playSound(sound, channelGroup, false, &channel);
 	if (result != FMOD_OK)
 	{
 		std::cout << "FMOD error: " << result << " When playing sound";

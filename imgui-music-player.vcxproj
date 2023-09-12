@@ -28,6 +28,7 @@
     <ClInclude Include="fmod\include\fmod_errors.h" />
     <ClInclude Include="fmod\include\fmod_output.h" />
     <ClInclude Include="fmod_audio.h" />
+    <ClInclude Include="FileExplorer.h" />
     <ClInclude Include="imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\backends\imgui_impl_opengl3_loader.h" />

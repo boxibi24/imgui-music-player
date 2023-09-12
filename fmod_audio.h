@@ -15,4 +15,5 @@ public:
 	void playAudioFromAudioFilePath(std::string FilePath);
 	FMOD::Channel* channel;
 	FMOD::ChannelGroup* channelGroup;
+	FMOD::Sound* sound; //sound object, contains things related to current sound being played
 };
