@@ -243,20 +243,39 @@ int main(int, char**)
 
             //PROGRESS BAR
             try {
-                
-                unsigned int audioTotalLength = 0;
+                int index=0;
+                unsigned int totalLength = 0;
+                std::string tmpLength = " ";
+                std::string tmpPosition = " ";
                 unsigned int position = 0;
                 bool isPlaying;
                 float percentageFilled = 0.0;
                 AudioPlayer.channelGroup->isPlaying(&isPlaying);
                 if (isPlaying) {
-                    AudioPlayer.sound->getLength(&audioTotalLength, FMOD_TIMEUNIT_MS);
-                    audioTotalLength = audioTotalLength / 1000;
+                    AudioPlayer.sound->getLength(&totalLength, FMOD_TIMEUNIT_MS);
                     AudioPlayer.channel->getPosition(&position, FMOD_TIMEUNIT_MS);
-                    position = position / 1000;
-                    percentageFilled = position/(float)audioTotalLength;
+
+                    //Prepare the string so overlay displayed on bar is proper
+                    percentageFilled = position / (float)totalLength;
+                    tmpLength = std::to_string((float)totalLength / 1000);
+                    for (int i = 0; i < tmpLength.length(); i++) {
+                        if (tmpLength[i] == '.') {
+                            index = i + 1;
+                            break;
+                        }
+                    }
+                    tmpLength = tmpLength.substr(0, index + 2);
+                    tmpPosition = std::to_string((float)position / 1000);
+                    for (int i = 0; i < tmpPosition.length(); i++) {
+                        if (tmpPosition[i] == '.') {
+                            index = i + 1;
+                            break;
+                        }
+                    }
+                    tmpPosition = tmpPosition.substr(0, index + 2);
+                    
                 }
-                std::string stringOverlay = std::to_string(position) + ":" + std::to_string(audioTotalLength);
+                std::string stringOverlay = tmpPosition + ":" + tmpLength;
                 
                 //first parameter is how much the bar is filled up, receives a float, below 1 (0.3 means 30%)
                 //second parameter is the allignment of the bar, 0 means auto alligned
